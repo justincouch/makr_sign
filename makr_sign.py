@@ -182,8 +182,13 @@ def randomize_IMAGE():
         for j in range(NUM_ROWS):
             IMAGE[i][j] = numpy.random.randint(0,16777215)
 
+def set_image_border(color):
+    for i in range(0,55):
+        IMAGE[ PIXEL_MAPPING[i][0] ][ PIXEL_MAPPING[i][1] ] = color
+
 while True:
-    randomize_IMAGE()
+    ##randomize_IMAGE()
+    set_image_border( (255,100,25) )
     set_pixels_from_IMAGE()
     time.sleep(0.5)
 
