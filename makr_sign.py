@@ -164,8 +164,20 @@ def convert_int_to_rgb(col):
     b = (col & BLUE_MASK) >> 16
     r = (col & RED_MASK)
     g = (col & GREEN_MASK) >> 8
-    return (r, g, b) if ORDER == neopixel.RGB or ORDER == neopixel.GRB else (r, g, b, 0)
+    if ORDER == neopixel.RGB:
+        return (r, g, b)
+    elif ORDER == neopixel.GRB:
+        return (g,r,b)
+    else:
+        return (r, g, b, 0)
 
+
+def convert_rgb_to_int(coltup):
+    r = coltup[0]
+    g = coltup[1]
+    b = coltup[2]
+    bgrVal = (b << 16) + (g << 8) + r
+    return bgrVal
 
 
 def set_pixels_from_IMAGE():
@@ -183,12 +195,48 @@ def randomize_IMAGE():
             IMAGE[i][j] = numpy.random.randint(0,16777215)
 
 def set_image_border(color):
-    for i in range(0,55):
-        IMAGE[ PIXEL_MAPPING[i][0] ][ PIXEL_MAPPING[i][1] ] = color
+    for i in range(0,56):
+        IMAGE[ PIXEL_MAPPING[i][0] ][ PIXEL_MAPPING[i][1] ] = convert_rgb_to_int(color)
+
+def set_image_M(color):
+    for i in range(56,73):
+        IMAGE[ PIXEL_MAPPING[i][0] ][ PIXEL_MAPPING[i][1] ] = convert_rgb_to_int(color)
+
+def set_image_A(color):
+    for i in range(73,85):
+        IMAGE[ PIXEL_MAPPING[i][0] ][ PIXEL_MAPPING[i][1] ] = convert_rgb_to_int(color)
+
+def set_image_K(color):
+    for i in range(101,118):
+        IMAGE[ PIXEL_MAPPING[i][0] ][ PIXEL_MAPPING[i][1] ] = convert_rgb_to_int(color)
+
+def set_image_R(color):
+    for i in range(85,101):
+        IMAGE[ PIXEL_MAPPING[i][0] ][ PIXEL_MAPPING[i][1] ] = convert_rgb_to_int(color)
+
 
 while True:
-    ##randomize_IMAGE()
-    set_image_border( (255,100,25) )
+    randomize_IMAGE()
+    set_pixels_from_IMAGE()
+    time.sleep(0.5)
+    
+    set_image_border( (255,0,0) )
+    set_pixels_from_IMAGE()
+    time.sleep(0.5)
+    
+    set_image_M( (0,255,0) )
+    set_pixels_from_IMAGE()
+    time.sleep(0.5)
+    
+    set_image_A( (0,0,255) )
+    set_pixels_from_IMAGE()
+    time.sleep(0.5)
+    
+    set_image_K( (255,255,0) )
+    set_pixels_from_IMAGE()
+    time.sleep(0.5)
+    
+    set_image_R( (255,0,255) )
     set_pixels_from_IMAGE()
     time.sleep(0.5)
 
