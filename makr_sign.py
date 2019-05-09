@@ -2,7 +2,8 @@ import numpy
 import time
 import board
 import neopixel
-##import matplotlib.pyplot as plt
+from tkinter import *
+
 
 pixel_pin = board.D18
 num_pixels = 118
@@ -25,6 +26,17 @@ b = 25
 bgrVal = (b << 16) + (g << 8) + r
 
 IMAGE[4][0] = bgrVal
+
+
+top = Tk()
+top.title("makr canvas")
+
+canvas = Canvas(top, bg="black", height=300, width=300)
+canvas.pack()
+
+canvas_pixels = [[ canvas.create_rectangle(x*20,y*20, (x*20)+20, (y*20)+20, fill="red") for y in range(NUM_ROWS) ] for x in range(NUM_ROWS) ]
+
+
 
 BLUE_MASK = 0xFF0000
 GREEN_MASK = 0xFF00
@@ -161,6 +173,10 @@ PIXEL_MAPPING = [
     ]
 
 
+for i in range(len(PIXEL_MAPPING)):
+    canvas.create_oval( (PIXEL_MAPPING[i][0] * 20)+5, (PIXEL_MAPPING[i][1] * 20)+5, (PIXEL_MAPPING[i][0] * 20) + 10, (PIXEL_MAPPING[i][1] * 20) + 10)
+
+
 def convert_int_to_rgb(col):
     b = (col & BLUE_MASK) >> 16
     r = (col & RED_MASK)
@@ -180,8 +196,25 @@ def convert_rgb_to_int(coltup):
     bgrVal = (b << 16) + (g << 8) + r
     return bgrVal
 
+def convert_int_to_hex(col):
+    b = (col & BLUE_MASK) >> 16
+    r = (col & RED_MASK)
+    g = (col & GREEN_MASK) >> 8
+    bhex = '{:02x}'.format(b)
+    rhex = '{:02x}'.format(r)
+    ghex = '{:02x}'.format(g)
+    return "#" + rhex + ghex + bhex
+
+def update_canvas():
+    for j in range(NUM_ROWS):
+        for i in range(NUM_ROWS):
+            hexstr = convert_int_to_hex( IMAGE[i][j] )
+            canvas.itemconfig( canvas_pixels[i][j], fill=hexstr )
+    top.update_idletasks()
+    top.update()
 
 def set_pixels_from_IMAGE():
+    update_canvas()
     for i in range(len(PIXEL_MAPPING)):
         col = int(IMAGE[ PIXEL_MAPPING[i][0] ][ PIXEL_MAPPING[i][1] ])
         newcol = convert_int_to_rgb(col)
@@ -254,8 +287,9 @@ def rainbow_wipe( direction, width = 0.5, speed = 0.3 ):
                     IMAGE[i][j] = col
                 else:
                     IMAGE[j][i] = col
-                set_pixels_from_IMAGE()
-
+            set_pixels_from_IMAGE()
+        
+    
 
 
 while True:
