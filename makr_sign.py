@@ -239,10 +239,8 @@ def wheel(pos):
 
 
 
-def rainbow_wipe( direction, _width, _speed ):
+def rainbow_wipe( direction, width = 0.5, speed = 0.3 ):
     ## width is how much of a full rainbow shows at a time, 0.5
-    width = _width || 0.5
-    speed = _speed || 0.33
     hmult = 1
     if ( direction == "DOWN" || direction == "RIGHT" ) hmult = -1
 
