@@ -242,14 +242,15 @@ def wheel(pos):
 def rainbow_wipe( direction, width = 0.5, speed = 0.3 ):
     ## width is how much of a full rainbow shows at a time, 0.5
     hmult = 1
-    if ( direction == "DOWN" || direction == "RIGHT" ) hmult = -1
+    if ( direction == "DOWN" or direction == "RIGHT" ):
+        hmult = -1
 
     for h in range(255):
         for j in range(NUM_ROWS):
             rw_index = int((j*255/ (NUM_ROWS/width) ) + hmult*(h/speed))
             col = convert_rgb_to_int(wheel(((rw_index) & 255)))
             for i in range(NUM_ROWS):
-                if ( direction == "UP" || direction == "DOWN" ):
+                if ( direction == "UP" or direction == "DOWN" ):
                     IMAGE[i][j] = col
                 else:
                     IMAGE[j][i] = col
