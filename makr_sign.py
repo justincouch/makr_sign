@@ -2,6 +2,7 @@ import numpy
 import time
 import board
 import neopixel
+##import matplotlib.pyplot as plt
 
 pixel_pin = board.D18
 num_pixels = 118
@@ -153,10 +154,10 @@ PIXEL_MAPPING = [
     (4,8),
     (5,8),
     (6,8), ## 113 top rt of K
-    (5,7),
-    (4,6),
-    (3,5),
-    (5,5)  ## 117 end
+    (5,9),
+    (4,10),
+    (3,11),
+    (5,11)  ## 117 end
     ]
 
 
@@ -215,7 +216,71 @@ def set_image_R(color):
         IMAGE[ PIXEL_MAPPING[i][0] ][ PIXEL_MAPPING[i][1] ] = convert_rgb_to_int(color)
 
 
+def wheel(pos):
+    # Input 0-255 to get color value
+    # colors are transition r-g-b and back to r
+    if pos < 0 or pos > 255:
+        r = g = b = 0
+    elif pos < 85:
+        r = int(pos * 3)
+        g = int(255 - pos*3)
+        b = 0
+    elif pos < 170:
+        pos -= 85
+        r = int(255 - pos*3)
+        g = 0
+        b = int(pos*3)
+    else:
+        pos -= 170
+        r = 0
+        g = int(pos*3)
+        b = int(255 - pos*3)
+    return (r, g, b) if ORDER == neopixel.RGB or ORDER == neopixel.GRB else (r, g, b, 0) 
+
+
+
+def rainbow_wipe( direction, delay ):
+    if ( direction == "DOWN" ):
+        for h in range(255):
+            for j in range(NUM_ROWS):
+                rw_index = int((j*255/ (NUM_ROWS*2) ) - (h*3))
+                col = convert_rgb_to_int(wheel(((rw_index) & 255)))
+                for i in range(NUM_ROWS):
+                    IMAGE[i][j] = col
+
+                set_pixels_from_IMAGE()
+    elif ( direction == "UP" ):
+        for h in range(255):
+            for j in range(NUM_ROWS):
+                rw_index = int((j*255/ (NUM_ROWS*2) ) + (h*3))
+                col = convert_rgb_to_int(wheel(((rw_index) & 255)))
+                for i in range(NUM_ROWS):
+                    IMAGE[i][j] = col
+
+                set_pixels_from_IMAGE()
+    elif ( direction == "LEFT" ):
+        for h in range(255):
+            for j in range(NUM_ROWS):
+                rw_index = int((j*255/ (NUM_ROWS*2) ) + (h*3))
+                col = convert_rgb_to_int(wheel(((rw_index) & 255)))
+                for i in range(NUM_ROWS):
+                    IMAGE[j][i] = col
+
+                set_pixels_from_IMAGE()
+    elif ( direction == "RIGHT" ):
+        for h in range(255):
+            for j in range(NUM_ROWS):
+                rw_index = int((j*255/ (NUM_ROWS*2) ) - (h*3))
+                col = convert_rgb_to_int(wheel(((rw_index) & 255)))
+                for i in range(NUM_ROWS):
+                    IMAGE[j][i] = col
+
+                set_pixels_from_IMAGE()
+
+
+
 while True:
+    
     randomize_IMAGE()
     set_pixels_from_IMAGE()
     time.sleep(0.5)
@@ -240,31 +305,7 @@ while True:
     set_pixels_from_IMAGE()
     time.sleep(0.5)
 
-
-##print(IMAGE[2][0])
-##print(PIXEL_MAPPING[1])
-##
-##print( IMAGE[ PIXEL_MAPPING[1][0] ][ PIXEL_MAPPING[1][1] ] )
-##
-##col = int(IMAGE[ PIXEL_MAPPING[1][0] ][ PIXEL_MAPPING[1][1] ])
-##
-##print("blue:")
-##print(( (col & BLUE_MASK) >> 16 ) )
-##print("red:")
-##print( ( (col & RED_MASK) ) )
-##print("GREEN:")
-##print(( (col & GREEN_MASK) >> 8 ) )
-##
-##print(IMAGE[4][0])
-##print(PIXEL_MAPPING[2])
-##
-##print( IMAGE[ PIXEL_MAPPING[2][0] ][ PIXEL_MAPPING[2][1] ] )
-##
-##col = int(IMAGE[ PIXEL_MAPPING[2][0] ][ PIXEL_MAPPING[2][1] ])
-##
-##print("blue:")
-##print(( (col & BLUE_MASK) >> 16 ) )
-##print("red:")
-##print( ( (col & RED_MASK) ) )
-##print("GREEN:")
-##print(( (col & GREEN_MASK) >> 8 ) )
+    rainbow_wipe( "DOWN", 0.001 )
+    rainbow_wipe( "UP", 0.001 )
+    rainbow_wipe( "LEFT", 0.001 )
+    rainbow_wipe( "RIGHT", 0.001 )
