@@ -235,72 +235,49 @@ def wheel(pos):
         r = 0
         g = int(pos*3)
         b = int(255 - pos*3)
-    return (r, g, b) if ORDER == neopixel.RGB or ORDER == neopixel.GRB else (r, g, b, 0) 
+    return (r, g, b) if ORDER == neopixel.RGB or ORDER == neopixel.GRB else (r, g, b, 0)
 
 
 
 def rainbow_wipe( direction, delay ):
-    if ( direction == "DOWN" ):
-        for h in range(255):
-            for j in range(NUM_ROWS):
-                rw_index = int((j*255/ (NUM_ROWS*2) ) - (h*3))
-                col = convert_rgb_to_int(wheel(((rw_index) & 255)))
-                for i in range(NUM_ROWS):
+    hmult = 1
+    if ( direction == "DOWN" || direction == "RIGHT" ) hmult = -1
+
+    for h in range(255):
+        for j in range(NUM_ROWS):
+            rw_index = int((j*255/ (NUM_ROWS*2) ) + hmult*(h*3))
+            col = convert_rgb_to_int(wheel(((rw_index) & 255)))
+            for i in range(NUM_ROWS):
+                if ( direction == "UP" || direction == "DOWN" ):
                     IMAGE[i][j] = col
-
-                set_pixels_from_IMAGE()
-    elif ( direction == "UP" ):
-        for h in range(255):
-            for j in range(NUM_ROWS):
-                rw_index = int((j*255/ (NUM_ROWS*2) ) + (h*3))
-                col = convert_rgb_to_int(wheel(((rw_index) & 255)))
-                for i in range(NUM_ROWS):
-                    IMAGE[i][j] = col
-
-                set_pixels_from_IMAGE()
-    elif ( direction == "LEFT" ):
-        for h in range(255):
-            for j in range(NUM_ROWS):
-                rw_index = int((j*255/ (NUM_ROWS*2) ) + (h*3))
-                col = convert_rgb_to_int(wheel(((rw_index) & 255)))
-                for i in range(NUM_ROWS):
+                else:
                     IMAGE[j][i] = col
-
-                set_pixels_from_IMAGE()
-    elif ( direction == "RIGHT" ):
-        for h in range(255):
-            for j in range(NUM_ROWS):
-                rw_index = int((j*255/ (NUM_ROWS*2) ) - (h*3))
-                col = convert_rgb_to_int(wheel(((rw_index) & 255)))
-                for i in range(NUM_ROWS):
-                    IMAGE[j][i] = col
-
                 set_pixels_from_IMAGE()
 
 
 
 while True:
-    
+
     randomize_IMAGE()
     set_pixels_from_IMAGE()
     time.sleep(0.5)
-    
+
     set_image_border( (255,0,0) )
     set_pixels_from_IMAGE()
     time.sleep(0.5)
-    
+
     set_image_M( (0,255,0) )
     set_pixels_from_IMAGE()
     time.sleep(0.5)
-    
+
     set_image_A( (0,0,255) )
     set_pixels_from_IMAGE()
     time.sleep(0.5)
-    
+
     set_image_K( (255,255,0) )
     set_pixels_from_IMAGE()
     time.sleep(0.5)
-    
+
     set_image_R( (255,0,255) )
     set_pixels_from_IMAGE()
     time.sleep(0.5)
