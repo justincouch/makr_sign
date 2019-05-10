@@ -2,6 +2,8 @@ import numpy
 import time
 import board
 import neopixel
+import random
+import noise
 from tkinter import *
 
 
@@ -278,7 +280,7 @@ def rainbow_wipe( direction, width = 0.5, speed = 0.3 ):
     if ( direction == "DOWN" or direction == "RIGHT" ):
         hmult = -1
 
-    for h in range(255):
+    for h in range(25):
         for j in range(NUM_ROWS):
             rw_index = int((j*255/ (NUM_ROWS/width) ) + hmult*(h/speed))
             col = convert_rgb_to_int(wheel(((rw_index) & 255)))
@@ -289,36 +291,128 @@ def rainbow_wipe( direction, width = 0.5, speed = 0.3 ):
                     IMAGE[j][i] = col
             set_pixels_from_IMAGE()
         
-    
 
+
+def perlin(x,y,seed=0):
+    #permutation table
+    numpy.random.seed(seed)
+    p = numpy.arange(256,dtype=int)
+    numpy.random.shuffle(p)
+    p = numpy.stack([p,p]).flatten()
+    #coords of top-left
+    xi = x.astype(int)
+    yi = y.astype(int)
+    # internal coords
+    xf = x - xi
+    yf = y - yi
+    # fade factors
+    u = fade(xf)
+    v = fade(yf)
+    # noise components
+    n00 = gradient( p[p[xi]+yi], xf, yf )
+    n01 = gradient( p[p[xi]+yi+1], xf, yf-1 )
+    n11 = gradient( p[p[xi+1]+yi+1], xf-1, yf-1 )
+    n10 = gradient( p[p[xi+1]+yi], xf-1, yf )
+    # combine noises
+    x1 = lerp( n00, n10, u)
+    x2 = lerp( n01, n11, u)
+    return lerp(x1, x2, v)
+
+def lerp(a,b,x):
+    #linear interpolation
+    return a + x * (b-a)
+
+def fade(t):
+    return (6 * t**5) - (15 * t**4) + (10 * t**3)
+
+def gradient(h,x,y):
+    # gradient converts h to the right gradient vector and return the dot product with (x,y)
+    vectors = numpy.array([[0,1],[0,-1],[1,0],[-1,0]])
+    g = vectors[h%4]
+    return g[:,:,0] * x + g[:,:,1] * y
+
+def visualize_perlin(p):
+    for j in range(NUM_ROWS):
+        for i in range(NUM_ROWS):
+            a = p[i][j]
+            a += 0.5
+            a = numpy.clip(a,0,1)
+            a *= 255
+            ahex = '{:02x}'.format(int(a))
+            if ( ahex == "-1" ):
+                print(i, j, a)
+            hexstr = "#"+ahex+ahex+ahex
+            canvas.itemconfig( canvas_pixels[i][j], fill=hexstr )
+    top.update_idletasks()
+    top.update()
+
+
+def vis_perlin_lib(z):
+    for j in range(NUM_ROWS):
+        for i in range(NUM_ROWS):
+            x = i / 8
+            y = j / 8
+            a = noise.snoise3(x,y, z)
+            a *= 127
+            a += 128
+            ahex = '{:02x}'.format(int(a))
+            if ( ahex == "-1" ):
+                print(i, j, a)
+            #hexstr = "#"+ahex+ahex+ahex
+            
+            col = convert_rgb_to_int(wheel(a))
+            IMAGE[i][j] = col
+            
+            #canvas.itemconfig( canvas_pixels[i][j], fill=hexstr )
+    #top.update_idletasks()
+    #top.update()
+
+##lin = numpy.linspace(0,5,15,endpoint=False)
+##x,y = numpy.meshgrid(lin,lin)
+##xoffset = 0
+##yoffset = 0
+##seednum = 0
+##perl = perlin(x,y,seed=seednum)
+##visualize_perlin(perl)
+
+zinc = 0
 
 while True:
-
-    randomize_IMAGE()
+    #time.sleep(0.5)
+##    perl = perlin(x+xoffset,y+yoffset,seed=seednum)
+##    visualize_perlin(perl)
+##    xoffset += random.uniform(-0.5,0.5)
+##    yoffset += random.uniform(-0.5,0.5)
+    vis_perlin_lib(zinc)
     set_pixels_from_IMAGE()
-    time.sleep(0.5)
-
-    set_image_border( (255,0,0) )
-    set_pixels_from_IMAGE()
-    time.sleep(0.5)
-
-    set_image_M( (0,255,0) )
-    set_pixels_from_IMAGE()
-    time.sleep(0.5)
-
-    set_image_A( (0,0,255) )
-    set_pixels_from_IMAGE()
-    time.sleep(0.5)
-
-    set_image_K( (255,255,0) )
-    set_pixels_from_IMAGE()
-    time.sleep(0.5)
-
-    set_image_R( (255,0,255) )
-    set_pixels_from_IMAGE()
-    time.sleep(0.5)
-
-    rainbow_wipe( "DOWN", 0.5, 0.3 )
-    rainbow_wipe( "UP", 1, 1 )
-    rainbow_wipe( "LEFT", 2, 0.1 )
-    rainbow_wipe( "RIGHT" )
+    zinc += 0.01
+    #seednum += 1
+##
+##    randomize_IMAGE()
+##    set_pixels_from_IMAGE()
+##    time.sleep(0.5)
+##
+##    set_image_border( (255,0,0) )
+##    set_pixels_from_IMAGE()
+##    time.sleep(0.5)
+##
+##    set_image_M( (0,255,0) )
+##    set_pixels_from_IMAGE()
+##    time.sleep(0.5)
+##
+##    set_image_A( (0,0,255) )
+##    set_pixels_from_IMAGE()
+##    time.sleep(0.5)
+##
+##    set_image_K( (255,255,0) )
+##    set_pixels_from_IMAGE()
+##    time.sleep(0.5)
+##
+##    set_image_R( (255,0,255) )
+##    set_pixels_from_IMAGE()
+##    time.sleep(0.5)
+##
+##    rainbow_wipe( "DOWN", 0.5, 0.3 )
+##    rainbow_wipe( "UP", 1, 1 )
+##    rainbow_wipe( "LEFT", 2, 0.1 )
+##    rainbow_wipe( "RIGHT" )
