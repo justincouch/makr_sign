@@ -6,6 +6,7 @@ import random
 import noise
 from tkinter import *
 
+USE_VIZ_CANVAS = False
 
 pixel_pin = board.D18
 num_pixels = 118
@@ -216,7 +217,8 @@ def update_canvas():
     top.update()
 
 def set_pixels_from_IMAGE():
-    update_canvas()
+    if (USE_VIZ_CANVAS):
+        update_canvas()
     for i in range(len(PIXEL_MAPPING)):
         col = int(IMAGE[ PIXEL_MAPPING[i][0] ][ PIXEL_MAPPING[i][1] ])
         newcol = convert_int_to_rgb(col)
@@ -385,7 +387,7 @@ while True:
 ##    yoffset += random.uniform(-0.5,0.5)
     vis_perlin_lib(zinc)
     set_pixels_from_IMAGE()
-    zinc += 0.01
+    zinc += 0.02
     #seednum += 1
 ##
 ##    randomize_IMAGE()
