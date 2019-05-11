@@ -4,9 +4,17 @@ import board
 import neopixel
 import random
 import noise
+import PIL.Image
 from tkinter import *
 
-USE_VIZ_CANVAS = False
+USE_VIZ_CANVAS = True
+
+im = PIL.Image.open('images/lox.jpg')
+imw, imh = im.size
+im_vals = list(im.getdata())
+im_array = numpy.array(im)
+#im_array[imw, imh]
+#print(im_vals)
 
 pixel_pin = board.D18
 num_pixels = 118
@@ -369,6 +377,12 @@ def vis_perlin_lib(z):
     #top.update_idletasks()
     #top.update()
 
+def viz_image(arr):
+    for i in range(NUM_ROWS):
+        for j in range(NUM_ROWS):
+            col = convert_rgb_to_int(arr[j][i])
+            IMAGE[i][j] = col
+
 ##lin = numpy.linspace(0,5,15,endpoint=False)
 ##x,y = numpy.meshgrid(lin,lin)
 ##xoffset = 0
@@ -379,15 +393,26 @@ def vis_perlin_lib(z):
 
 zinc = 0
 
+viz_image(im_array)
+set_pixels_from_IMAGE()
+
 while True:
-    #time.sleep(0.5)
+    time.sleep(0.5)
 ##    perl = perlin(x+xoffset,y+yoffset,seed=seednum)
 ##    visualize_perlin(perl)
 ##    xoffset += random.uniform(-0.5,0.5)
 ##    yoffset += random.uniform(-0.5,0.5)
-    vis_perlin_lib(zinc)
-    set_pixels_from_IMAGE()
-    zinc += 0.02
+
+
+    
+
+    
+##    vis_perlin_lib(zinc)
+##    set_pixels_from_IMAGE()
+##    zinc += 0.02
+
+
+    
     #seednum += 1
 ##
 ##    randomize_IMAGE()
