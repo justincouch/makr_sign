@@ -4,12 +4,15 @@ import board
 import neopixel
 import random
 import noise
+import math
 import PIL.Image
 from tkinter import *
 
-USE_VIZ_CANVAS = True
+USE_VIZ_CANVAS =False
+COLOR_MODE = "RAINBOW" #"LOGO"
+ANIM_MODE = "RIPPLE" #"PERLIN" "RIPPLE"
 
-im = PIL.Image.open('images/lox.jpg')
+im = PIL.Image.open('images/uw.jpg')
 imw, imh = im.size
 im_vals = list(im.getdata())
 im_array = numpy.array(im)
@@ -18,7 +21,7 @@ im_array = numpy.array(im)
 
 pixel_pin = board.D18
 num_pixels = 118
-
+ripple_ctr = 0
 ORDER = neopixel.GRB
 CHASE_INTERVAL = 0.05
 RAINBOW_INTERVAL = 0.01
@@ -282,6 +285,19 @@ def wheel(pos):
         b = int(255 - pos*3)
     return (r, g, b) if ORDER == neopixel.RGB or ORDER == neopixel.GRB else (r, g, b, 0)
 
+def linear_rainbow(pos):
+    if pos < 0 or pos > 255:
+        r = g = b = 0
+    elif pos < 128:
+        r = int( 255 - pos*2 )
+        g = int( pos*2 )
+        b = 0
+    else:
+        pos -= 128
+        r = 0
+        g = int( 255 - pos*2 )
+        b = int( pos * 2 )
+    return (r, g, b) if ORDER == neopixel.RGB or ORDER == neopixel.GRB else (r, g, b, 0)
 
 
 def rainbow_wipe( direction, width = 0.5, speed = 0.3 ):
@@ -377,6 +393,23 @@ def vis_perlin_lib(z):
     #top.update_idletasks()
     #top.update()
 
+def viz_perlin_logo(z):
+    for j in range(NUM_ROWS):
+        for i in range(NUM_ROWS):
+            x = i / 2
+            y = j / 2
+            a = noise.snoise3(x,y, z)
+            ## use 225 for a 15x15 image
+            a *= 112
+            a += 113
+            ahex = '{:02x}'.format(int(a))
+            if ( ahex == "-1" ):
+                print(i, j, a)
+            #hexstr = "#"+ahex+ahex+ahex
+            
+            col = convert_rgb_to_int(im_vals[int(a)])
+            IMAGE[i][j] = col
+
 def viz_image(arr):
     for i in range(NUM_ROWS):
         for j in range(NUM_ROWS):
@@ -391,26 +424,40 @@ def viz_image(arr):
 ##perl = perlin(x,y,seed=seednum)
 ##visualize_perlin(perl)
 
+def vis_ripple():
+    #current_millis = int(round(time.time() * 100000))
+    for i in range(NUM_ROWS):
+        for j in range(NUM_ROWS):
+            d = math.hypot( i-7, j-7 )
+            num = math.floor( (math.sin(d/2-(ripple_ctr/128))*128) + 128 )
+            #col = convert_rgb_to_int(linear_rainbow(num))
+            col = convert_rgb_to_int((num,num,num))
+            IMAGE[i][j] = col    
+
 zinc = 0
 
-viz_image(im_array)
+##viz_image(im_array)
 set_pixels_from_IMAGE()
 
 while True:
-    time.sleep(0.5)
+##    time.sleep(0.5)
 ##    perl = perlin(x+xoffset,y+yoffset,seed=seednum)
 ##    visualize_perlin(perl)
 ##    xoffset += random.uniform(-0.5,0.5)
 ##    yoffset += random.uniform(-0.5,0.5)
 
 
-    
-
-    
-##    vis_perlin_lib(zinc)
+##    viz_perlin_logo(zinc)
 ##    set_pixels_from_IMAGE()
 ##    zinc += 0.02
-
+    if ANIM_MODE == "PERLIN":
+        vis_perlin_lib(zinc)
+        set_pixels_from_IMAGE()
+        zinc += 0.02
+    elif ANIM_MODE == "RIPPLE":
+        vis_ripple()
+        set_pixels_from_IMAGE()
+        ripple_ctr += 20
 
     
     #seednum += 1
