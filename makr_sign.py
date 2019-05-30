@@ -20,7 +20,7 @@ im_array = numpy.array(im)
 #print(im_vals)
 
 pixel_pin = board.D18
-num_pixels = 118
+num_pixels = 2
 ripple_ctr = 0
 ORDER = neopixel.GRB
 CHASE_INTERVAL = 0.05
@@ -316,7 +316,7 @@ def rainbow_wipe( direction, width = 0.5, speed = 0.3 ):
                 else:
                     IMAGE[j][i] = col
             set_pixels_from_IMAGE()
-        
+
 
 
 def perlin(x,y,seed=0):
@@ -385,10 +385,10 @@ def vis_perlin_lib(z):
             if ( ahex == "-1" ):
                 print(i, j, a)
             #hexstr = "#"+ahex+ahex+ahex
-            
+
             col = convert_rgb_to_int(wheel(a))
             IMAGE[i][j] = col
-            
+
             #canvas.itemconfig( canvas_pixels[i][j], fill=hexstr )
     #top.update_idletasks()
     #top.update()
@@ -406,7 +406,7 @@ def viz_perlin_logo(z):
             if ( ahex == "-1" ):
                 print(i, j, a)
             #hexstr = "#"+ahex+ahex+ahex
-            
+
             col = convert_rgb_to_int(im_vals[int(a)])
             IMAGE[i][j] = col
 
@@ -432,7 +432,7 @@ def vis_ripple():
             num = math.floor( (math.sin(d/2-(ripple_ctr/128))*128) + 128 )
             #col = convert_rgb_to_int(linear_rainbow(num))
             col = convert_rgb_to_int((num,num,num))
-            IMAGE[i][j] = col    
+            IMAGE[i][j] = col
 
 zinc = 0
 
@@ -459,7 +459,7 @@ while True:
         set_pixels_from_IMAGE()
         ripple_ctr += 20
 
-    
+
     #seednum += 1
 ##
 ##    randomize_IMAGE()
