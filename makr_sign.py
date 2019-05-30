@@ -20,7 +20,7 @@ im_array = numpy.array(im)
 #print(im_vals)
 
 pixel_pin = board.D18
-num_pixels = 2
+num_pixels = 118
 ripple_ctr = 0
 ORDER = neopixel.GRB
 CHASE_INTERVAL = 0.05
