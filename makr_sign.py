@@ -22,7 +22,7 @@ im_array = numpy.array(im)
 pixel_pin = board.D18
 num_pixels = 118
 ripple_ctr = 0
-ORDER = neopixel.RGB
+ORDER = neopixel.GRB
 CHASE_INTERVAL = 0.05
 RAINBOW_INTERVAL = 0.01
 
