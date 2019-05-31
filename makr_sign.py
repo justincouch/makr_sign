@@ -56,7 +56,7 @@ BLUE_MASK = 0xFF0000
 GREEN_MASK = 0xFF00
 RED_MASK = 0XFF
 
-RED = (0, 100, 0)
+RED = (100, 0, 0)
 pixels.fill(RED)
 pixels.show()
 time.sleep(1)
