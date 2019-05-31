@@ -430,8 +430,8 @@ def vis_ripple():
         for j in range(NUM_ROWS):
             d = math.hypot( i-7, j-7 )
             num = math.floor( (math.sin(d/2-(ripple_ctr/128))*128) + 128 )
-            #col = convert_rgb_to_int(linear_rainbow(num))
-            col = convert_rgb_to_int((num,num,num))
+            col = convert_rgb_to_int(linear_rainbow(num))
+            #col = convert_rgb_to_int((num,num,num))
             IMAGE[i][j] = col
 
 zinc = 0
