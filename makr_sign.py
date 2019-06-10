@@ -42,8 +42,8 @@ bgrVal = (b << 16) + (g << 8) + r
 
 IMAGE[4][0] = bgrVal
 
-GIPO.output(24,GPIO.HIGH)
-GIPO.output(25,GPIO.HIGH)
+GPIO.output(24,GPIO.HIGH)
+GPIO.output(25,GPIO.HIGH)
 
 top = Tk()
 top.title("makr canvas")
