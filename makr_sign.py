@@ -5,6 +5,7 @@ import neopixel
 import random
 import noise
 import math
+import RPi.GPIO as GPIO
 import PIL.Image
 from tkinter import *
 
@@ -41,6 +42,8 @@ bgrVal = (b << 16) + (g << 8) + r
 
 IMAGE[4][0] = bgrVal
 
+GIPO.output(24,GPIO.HIGH)
+GIPO.output(25,GPIO.HIGH)
 
 top = Tk()
 top.title("makr canvas")
@@ -347,7 +350,7 @@ zinc = 0
 ##    viz_perlin_logo(zinc)
 ##    set_pixels_from_IMAGE()
 ##    zinc += 0.02
-    
+
 ##    if ANIM_MODE == "PERLIN":
 ##        vis_perlin_lib(zinc)
 ##        set_pixels_from_IMAGE()
