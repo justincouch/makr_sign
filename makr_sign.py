@@ -46,6 +46,7 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
 GPIO.setup(24,GPIO.OUT)
 GPIO.setup(25,GPIO.OUT)
+GPIO.setup(23, GPIO.IN)
 
 GPIO.output(24,GPIO.LOW)
 GPIO.output(25,GPIO.LOW)
@@ -354,7 +355,12 @@ zinc = 0
 ##viz_image(im_array)
 ##set_pixels_from_IMAGE()
 
-##while True:
+while True:
+    if GPIO.input(23) == True:
+        GPIO.output(24,GPIO.HIGH)
+    else :
+        GPIO.output(24,GPIO.LOW)
+
 ##    time.sleep(0.5)
 ##    perl = perlin(x+xoffset,y+yoffset,seed=seednum)
 ##    visualize_perlin(perl)
