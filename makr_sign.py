@@ -47,8 +47,18 @@ GPIO.setwarnings(False)
 GPIO.setup(24,GPIO.OUT)
 GPIO.setup(25,GPIO.OUT)
 
+GPIO.output(24,GPIO.LOW)
+GPIO.output(25,GPIO.LOW)
+
+time.sleep(0.5)
+
 GPIO.output(24,GPIO.HIGH)
 GPIO.output(25,GPIO.HIGH)
+
+time.sleep(0.5)
+
+GPIO.output(24,GPIO.LOW)
+GPIO.output(25,GPIO.LOW)
 
 top = Tk()
 top.title("makr canvas")
@@ -64,7 +74,7 @@ BLUE_MASK = 0xFF0000
 GREEN_MASK = 0xFF00
 RED_MASK = 0XFF
 
-RED = (100, 0, 0)
+RED = (0, 200, 0)
 pixels.fill(RED)
 pixels.show()
 time.sleep(1)
