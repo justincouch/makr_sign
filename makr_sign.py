@@ -42,6 +42,11 @@ bgrVal = (b << 16) + (g << 8) + r
 
 IMAGE[4][0] = bgrVal
 
+GPIO.setmode(GPIO.BCM)
+GPIO.setwarnings(False)
+GPIO.setup(24,GPIO.OUT)
+GPIO.setup(25,GPIO.OUT)
+
 GPIO.output(24,GPIO.HIGH)
 GPIO.output(25,GPIO.HIGH)
 
