@@ -10,7 +10,7 @@ from tkinter import *
 
 USE_VIZ_CANVAS = False
 COLOR_MODE = "RAINBOW" #"LOGO"
-ANIM_MODE = "PERLIN" #"PERLIN" "RIPPLE"
+ANIM_MODE = "RIPPLE" #"PERLIN" "RIPPLE"
 
 im = PIL.Image.open('images/uw.jpg')
 imw, imh = im.size
@@ -22,7 +22,7 @@ im_array = numpy.array(im)
 pixel_pin = board.D18
 num_pixels = 19
 ripple_ctr = 0
-ORDER = neopixel.RGB
+ORDER = neopixel.GRB
 CHASE_INTERVAL = 0.05
 RAINBOW_INTERVAL = 0.01
 
@@ -336,7 +336,7 @@ zinc = 0
 ##viz_image(im_array)
 ##set_pixels_from_IMAGE()
 
-while True:
+##while True:
 ##    time.sleep(0.5)
 ##    perl = perlin(x+xoffset,y+yoffset,seed=seednum)
 ##    visualize_perlin(perl)
@@ -348,14 +348,14 @@ while True:
 ##    set_pixels_from_IMAGE()
 ##    zinc += 0.02
     
-    if ANIM_MODE == "PERLIN":
-        vis_perlin_lib(zinc)
-        set_pixels_from_IMAGE()
-        zinc += 0.02
-    elif ANIM_MODE == "RIPPLE":
-        vis_ripple()
-        set_pixels_from_IMAGE()
-        ripple_ctr += 20
+##    if ANIM_MODE == "PERLIN":
+##        vis_perlin_lib(zinc)
+##        set_pixels_from_IMAGE()
+##        zinc += 0.02
+##    elif ANIM_MODE == "RIPPLE":
+##        vis_ripple()
+##        set_pixels_from_IMAGE()
+##        ripple_ctr += 20
 
 
     #seednum += 1
