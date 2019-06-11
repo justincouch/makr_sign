@@ -410,18 +410,21 @@ zinc = 0
 while True:
     if GPIO.input(BUTTON_PIN_1) == True:
         print("Button 1")
+        global COLOR_MODE
         COLOR_MODE == "RAINBOW"
         GPIO.output(LED_PIN_RED1,GPIO.HIGH)
         GPIO.output(LED_PIN_RED2,GPIO.LOW)
 
     if GPIO.input(BUTTON_PIN_2) == True:
         print("Button 2")
+        global COLOR_MODE
         COLOR_MODE == "LOGO"
         GPIO.output(LED_PIN_RED2,GPIO.HIGH)
         GPIO.output(LED_PIN_RED1,GPIO.LOW)
 
     if GPIO.input(BUTTON_PIN_3) == True:
         print("Button 3")
+        global ANIM_MODE
         ANIM_MODE == "PERLIN"
         GPIO.output(LED_PIN_BLUE,GPIO.HIGH)
     else :
@@ -429,6 +432,7 @@ while True:
 
     if GPIO.input(BUTTON_PIN_4) == True:
         print("Button 4")
+        global ANIM_MODE
         ANIM_MODE == "RIPPLE"
         GPIO.output(LED_PIN_GREEN,GPIO.HIGH)
     else :
