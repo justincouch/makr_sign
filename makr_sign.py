@@ -390,9 +390,16 @@ zinc = 0
 
 while True:
     if GPIO.input(BUTTON_PIN_1) == True:
+        print("Button 1")
         GPIO.output(LED_PIN_RED1,GPIO.HIGH)
     else :
         GPIO.output(LED_PIN_RED1,GPIO.LOW)
+
+    if GPIO.input(BUTTON_PIN_2) == True:
+        print("Button 2")
+        GPIO.output(LED_PIN_RED2,GPIO.HIGH)
+    else :
+        GPIO.output(LED_PIN_RED2,GPIO.LOW)
 
 ##    time.sleep(0.5)
 ##    perl = perlin(x+xoffset,y+yoffset,seed=seednum)
