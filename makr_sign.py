@@ -10,8 +10,8 @@ import PIL.Image
 from tkinter import *
 
 USE_VIZ_CANVAS = False
-COLOR_MODE = "LOGO" #"LOGO" "RAINBOW"
-ANIM_MODE = "PERLIN" #"PERLIN" "RIPPLE"
+global COLOR_MODE = "LOGO" #"LOGO" "RAINBOW"
+global ANIM_MODE = "PERLIN" #"PERLIN" "RIPPLE"
 
 
 ## ALL BCM NUMBERS
