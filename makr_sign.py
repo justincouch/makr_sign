@@ -10,8 +10,8 @@ import PIL.Image
 from tkinter import *
 
 USE_VIZ_CANVAS = False
-global COLOR_MODE = "LOGO" #"LOGO" "RAINBOW"
-global ANIM_MODE = "PERLIN" #"PERLIN" "RIPPLE"
+COLOR_MODE = "LOGO" #"LOGO" "RAINBOW"
+ANIM_MODE = "PERLIN" #"PERLIN" "RIPPLE"
 
 
 ## ALL BCM NUMBERS
@@ -406,34 +406,37 @@ zinc = 0
 
 ##viz_image(im_array)
 ##set_pixels_from_IMAGE()
+def setColorMode(mode):
+    global COLOR_MODE
+    COLOR_MODE = mode
+
+def setAnimMode(mode):
+    global ANIM_MODE
+    ANIM_MODE = mode
 
 while True:
     if GPIO.input(BUTTON_PIN_1) == True:
         print("Button 1")
-        global COLOR_MODE
-        COLOR_MODE == "RAINBOW"
+        setColorMode("RAINBOW")
         GPIO.output(LED_PIN_RED1,GPIO.HIGH)
         GPIO.output(LED_PIN_RED2,GPIO.LOW)
 
     if GPIO.input(BUTTON_PIN_2) == True:
         print("Button 2")
-        global COLOR_MODE
-        COLOR_MODE == "LOGO"
+        setColorMode("LOGO")
         GPIO.output(LED_PIN_RED2,GPIO.HIGH)
         GPIO.output(LED_PIN_RED1,GPIO.LOW)
 
     if GPIO.input(BUTTON_PIN_3) == True:
         print("Button 3")
-        global ANIM_MODE
-        ANIM_MODE == "PERLIN"
+        setAnimMode("PERLIN")
         GPIO.output(LED_PIN_BLUE,GPIO.HIGH)
     else :
         GPIO.output(LED_PIN_BLUE,GPIO.LOW)
 
     if GPIO.input(BUTTON_PIN_4) == True:
         print("Button 4")
-        global ANIM_MODE
-        ANIM_MODE == "RIPPLE"
+        setAnimMode("RIPPLE")
         GPIO.output(LED_PIN_GREEN,GPIO.HIGH)
     else :
         GPIO.output(LED_PIN_GREEN,GPIO.LOW)
