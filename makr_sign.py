@@ -387,11 +387,18 @@ def viz_image(arr):
 
 def vis_ripple():
     #current_millis = int(round(time.time() * 100000))
+    mainnumber = 256
+    if ( COLOR_MODE == "LOGO" ):
+        mainnumber = imw * imh
+    halfnumber = math.floor(mainnumber/2)
     for i in range(NUM_ROWS):
         for j in range(NUM_ROWS):
             d = math.hypot( i-7, j-7 )
-            num = math.floor( (math.sin(d/2-(ripple_ctr/128))*128) + 128 )
-            col = convert_rgb_to_int(linear_rainbow(num))
+            num = math.floor( (math.sin(d/2-(ripple_ctr/halfnumber))*halfnumber) + halfnumber )
+            if ( COLOR_MODE == "LOGO" ):
+                col = convert_rgb_to_int(im_vals[int(num)])
+            else:
+                col = convert_rgb_to_int(linear_rainbow(num))
             #col = convert_rgb_to_int((num,num,num))
             IMAGE[i][j] = col
 
@@ -403,15 +410,15 @@ zinc = 0
 while True:
     if GPIO.input(BUTTON_PIN_1) == True:
         print("Button 1")
+        COLOR_MODE == "RAINBOW"
         GPIO.output(LED_PIN_RED1,GPIO.HIGH)
-    else :
-        GPIO.output(LED_PIN_RED1,GPIO.LOW)
+        GPIO.output(LED_PIN_RED2,GPIO.LOW)
 
     if GPIO.input(BUTTON_PIN_2) == True:
         print("Button 2")
+        COLOR_MODE == "LOGO"
         GPIO.output(LED_PIN_RED2,GPIO.HIGH)
-    else :
-        GPIO.output(LED_PIN_RED2,GPIO.LOW)
+        GPIO.output(LED_PIN_RED1,GPIO.LOW)
 
     if GPIO.input(BUTTON_PIN_3) == True:
         print("Button 3")
@@ -437,7 +444,7 @@ while True:
     else :
         GPIO.output(LED_PIN_WHITE,GPIO.LOW)
 
-    time.sleep(0.5)
+    #time.sleep(0.5)
 ##    perl = perlin(x+xoffset,y+yoffset,seed=seednum)
 ##    visualize_perlin(perl)
 ##    xoffset += random.uniform(-0.5,0.5)
@@ -448,14 +455,17 @@ while True:
 ##    set_pixels_from_IMAGE()
 ##    zinc += 0.02
 
-##    if ANIM_MODE == "PERLIN":
-##        vis_perlin_lib(zinc)
-##        set_pixels_from_IMAGE()
-##        zinc += 0.02
-##    elif ANIM_MODE == "RIPPLE":
-##        vis_ripple()
-##        set_pixels_from_IMAGE()
-##        ripple_ctr += 20
+    if ANIM_MODE == "PERLIN":
+        if ( COLOR_MODE == "RAINBOW" ):
+            vis_perlin_lib(zinc)
+        else :
+            viz_perlin_logo(zinc)
+            set_pixels_from_IMAGE()
+            zinc += 0.02
+    elif ANIM_MODE == "RIPPLE":
+        vis_ripple()
+        set_pixels_from_IMAGE()
+        ripple_ctr += 20
 
 
     #seednum += 1
