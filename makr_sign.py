@@ -11,7 +11,7 @@ from tkinter import *
 
 USE_VIZ_CANVAS = False
 COLOR_MODE = "RAINBOW" #"LOGO"
-ANIM_MODE = "RIPPLE" #"PERLIN" "RIPPLE"
+ANIM_MODE = "PERLIN" #"PERLIN" "RIPPLE"
 
 
 ## ALL BCM NUMBERS
@@ -422,12 +422,14 @@ while True:
 
     if GPIO.input(BUTTON_PIN_3) == True:
         print("Button 3")
+        ANIM_MODE == "PERLIN"
         GPIO.output(LED_PIN_BLUE,GPIO.HIGH)
     else :
         GPIO.output(LED_PIN_BLUE,GPIO.LOW)
 
     if GPIO.input(BUTTON_PIN_4) == True:
         print("Button 4")
+        ANIM_MODE == "RIPPLE"
         GPIO.output(LED_PIN_GREEN,GPIO.HIGH)
     else :
         GPIO.output(LED_PIN_GREEN,GPIO.LOW)
