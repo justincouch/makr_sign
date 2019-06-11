@@ -83,16 +83,28 @@ IMAGE[4][0] = bgrVal
 
 GPIO.output(LED_PIN_RED1,GPIO.LOW)
 GPIO.output(LED_PIN_RED2,GPIO.LOW)
+GPIO.output(LED_PIN_BLUE,GPIO.LOW)
+GPIO.output(LED_PIN_GREEN,GPIO.LOW)
+GPIO.output(LED_PIN_YELLOW,GPIO.LOW)
+GPIO.output(LED_PIN_WHITE,GPIO.LOW)
 
 time.sleep(0.5)
 
 GPIO.output(LED_PIN_RED1,GPIO.HIGH)
 GPIO.output(LED_PIN_RED2,GPIO.HIGH)
+GPIO.output(LED_PIN_BLUE,GPIO.HIGH)
+GPIO.output(LED_PIN_GREEN,GPIO.HIGH)
+GPIO.output(LED_PIN_YELLOW,GPIO.HIGH)
+GPIO.output(LED_PIN_WHITE,GPIO.HIGH)
 
 time.sleep(0.5)
 
 GPIO.output(LED_PIN_RED1,GPIO.LOW)
 GPIO.output(LED_PIN_RED2,GPIO.LOW)
+GPIO.output(LED_PIN_BLUE,GPIO.LOW)
+GPIO.output(LED_PIN_GREEN,GPIO.LOW)
+GPIO.output(LED_PIN_YELLOW,GPIO.LOW)
+GPIO.output(LED_PIN_WHITE,GPIO.LOW)
 
 top = Tk()
 top.title("makr canvas")
@@ -401,7 +413,7 @@ while True:
     else :
         GPIO.output(LED_PIN_RED2,GPIO.LOW)
 
-##    time.sleep(0.5)
+    time.sleep(0.5)
 ##    perl = perlin(x+xoffset,y+yoffset,seed=seednum)
 ##    visualize_perlin(perl)
 ##    xoffset += random.uniform(-0.5,0.5)
