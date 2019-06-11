@@ -469,7 +469,7 @@ while True:
         set_pixels_from_IMAGE()
         ripple_ctr += 20
 
-
+    time.sleep(0.1)
     #seednum += 1
 ##
 ##    randomize_IMAGE()
