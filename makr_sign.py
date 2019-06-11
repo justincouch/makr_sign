@@ -13,6 +13,43 @@ USE_VIZ_CANVAS = False
 COLOR_MODE = "RAINBOW" #"LOGO"
 ANIM_MODE = "RIPPLE" #"PERLIN" "RIPPLE"
 
+
+## ALL BCM NUMBERS
+LED_PIN_RED1 = 26
+LED_PIN_RED2 = 13
+POT_PIN = 6
+LED_PIN_BLUE = 5
+LED_PIN_GREEN = 22
+LED_PIN_YELLOW = 27
+LED_PIN_WHITE = 17
+
+BUTTON_PIN_1 = 16
+BUTTON_PIN_2 = 12
+BUTTON_PIN_3 = 25
+BUTTON_PIN_4 = 24
+BUTTON_PIN_5 = 23
+BUTTON_PIN_6 = 4
+
+GPIO.setmode(GPIO.BCM)
+GPIO.setwarnings(False)
+GPIO.setup(LED_PIN_RED1,GPIO.OUT)
+GPIO.setup(LED_PIN_RED2,GPIO.OUT)
+GPIO.setup(LED_PIN_BLUE,GPIO.OUT)
+GPIO.setup(LED_PIN_GREEN,GPIO.OUT)
+GPIO.setup(LED_PIN_YELLOW,GPIO.OUT)
+GPIO.setup(LED_PIN_WHITE,GPIO.OUT)
+
+
+GPIO.setup(POT_PIN, GPIO.IN)
+GPIO.setup(BUTTON_PIN_1, GPIO.IN)
+GPIO.setup(BUTTON_PIN_2, GPIO.IN)
+GPIO.setup(BUTTON_PIN_3, GPIO.IN)
+GPIO.setup(BUTTON_PIN_4, GPIO.IN)
+GPIO.setup(BUTTON_PIN_5, GPIO.IN)
+GPIO.setup(BUTTON_PIN_6, GPIO.IN)
+
+
+
 im = PIL.Image.open('images/uw.jpg')
 imw, imh = im.size
 im_vals = list(im.getdata())
@@ -42,24 +79,20 @@ bgrVal = (b << 16) + (g << 8) + r
 
 IMAGE[4][0] = bgrVal
 
-GPIO.setmode(GPIO.BCM)
-GPIO.setwarnings(False)
-GPIO.setup(24,GPIO.OUT)
-GPIO.setup(25,GPIO.OUT)
-GPIO.setup(23, GPIO.IN)
 
-GPIO.output(24,GPIO.LOW)
-GPIO.output(25,GPIO.LOW)
+
+GPIO.output(LED_PIN_RED1,GPIO.LOW)
+GPIO.output(LED_PIN_RED2,GPIO.LOW)
 
 time.sleep(0.5)
 
-GPIO.output(24,GPIO.HIGH)
-GPIO.output(25,GPIO.HIGH)
+GPIO.output(LED_PIN_RED1,GPIO.HIGH)
+GPIO.output(LED_PIN_RED2,GPIO.HIGH)
 
 time.sleep(0.5)
 
-GPIO.output(24,GPIO.LOW)
-GPIO.output(25,GPIO.LOW)
+GPIO.output(LED_PIN_RED1,GPIO.LOW)
+GPIO.output(LED_PIN_RED2,GPIO.LOW)
 
 top = Tk()
 top.title("makr canvas")
@@ -356,10 +389,10 @@ zinc = 0
 ##set_pixels_from_IMAGE()
 
 while True:
-    if GPIO.input(23) == True:
-        GPIO.output(24,GPIO.HIGH)
+    if GPIO.input(BUTTON_PIN_1) == True:
+        GPIO.output(LED_PIN_RED1,GPIO.HIGH)
     else :
-        GPIO.output(24,GPIO.LOW)
+        GPIO.output(LED_PIN_RED1,GPIO.LOW)
 
 ##    time.sleep(0.5)
 ##    perl = perlin(x+xoffset,y+yoffset,seed=seednum)
