@@ -413,6 +413,30 @@ while True:
     else :
         GPIO.output(LED_PIN_RED2,GPIO.LOW)
 
+    if GPIO.input(BUTTON_PIN_3) == True:
+        print("Button 3")
+        GPIO.output(LED_PIN_BLUE,GPIO.HIGH)
+    else :
+        GPIO.output(LED_PIN_BLUE,GPIO.LOW)
+
+    if GPIO.input(BUTTON_PIN_4) == True:
+        print("Button 4")
+        GPIO.output(LED_PIN_GREEN,GPIO.HIGH)
+    else :
+        GPIO.output(LED_PIN_GREEN,GPIO.LOW)
+
+    if GPIO.input(BUTTON_PIN_5) == True:
+        print("Button 5")
+        GPIO.output(LED_PIN_YELLOW,GPIO.HIGH)
+    else :
+        GPIO.output(LED_PIN_YELLOW,GPIO.LOW)
+
+    if GPIO.input(BUTTON_PIN_6) == True:
+        print("Button 6")
+        GPIO.output(LED_PIN_WHITE,GPIO.HIGH)
+    else :
+        GPIO.output(LED_PIN_WHITE,GPIO.LOW)
+
     time.sleep(0.5)
 ##    perl = perlin(x+xoffset,y+yoffset,seed=seednum)
 ##    visualize_perlin(perl)
