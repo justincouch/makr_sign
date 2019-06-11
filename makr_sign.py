@@ -469,8 +469,8 @@ while True:
             vis_perlin_lib(zinc)
         else :
             viz_perlin_logo(zinc)
-            set_pixels_from_IMAGE()
-            zinc += 0.02
+        set_pixels_from_IMAGE()
+        zinc += 0.02
     elif ANIM_MODE == "RIPPLE":
         vis_ripple()
         set_pixels_from_IMAGE()
