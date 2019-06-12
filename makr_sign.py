@@ -414,12 +414,24 @@ def setAnimMode(mode):
     global ANIM_MODE
     ANIM_MODE = mode
 
+def setBrightness(num):
+    brightness = num
+
+def buttonHandler(channel):
+    print("button handler")
+    print(channel)
+    setColorMode("RAINBOW")
+    GPIO.output(LED_PIN_RED1,GPIO.HIGH)
+    GPIO.output(LED_PIN_RED2,GPIO.LOW)
+
+# when a falling edge is detected on port 17, regardless of whatever
+# else is happening in the program, the function my_callback will be run
+GPIO.add_event_detect(BUTTON_PIN_1, GPIO.FALLING, callback=buttonHandler, bouncetime=300)
+
 while True:
-    if GPIO.input(BUTTON_PIN_1) == True:
-        print("Button 1")
-        setColorMode("RAINBOW")
-        GPIO.output(LED_PIN_RED1,GPIO.HIGH)
-        GPIO.output(LED_PIN_RED2,GPIO.LOW)
+    # if GPIO.input(BUTTON_PIN_1) == True:
+    #     print("Button 1")
+        
 
     if GPIO.input(BUTTON_PIN_2) == True:
         print("Button 2")
