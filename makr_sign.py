@@ -9,6 +9,8 @@ import RPi.GPIO as GPIO
 import PIL.Image
 from tkinter import *
 
+print("STARTING MAKR SIGN")
+
 USE_VIZ_CANVAS = False
 COLOR_MODE = "LOGO" #"LOGO" "RAINBOW"
 ANIM_MODE = "PERLIN" #"PERLIN" "RIPPLE"
@@ -449,6 +451,7 @@ GPIO.add_event_detect(BUTTON_PIN_2, GPIO.FALLING, callback=buttonHandler, bounce
 GPIO.add_event_detect(BUTTON_PIN_3, GPIO.FALLING, callback=buttonHandler, bouncetime=300)
 GPIO.add_event_detect(BUTTON_PIN_4, GPIO.FALLING, callback=buttonHandler, bouncetime=300)
 
+print("starting while loop")
 
 while True:
     # if GPIO.input(BUTTON_PIN_1) == True:
