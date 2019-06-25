@@ -50,7 +50,7 @@ GPIO.setup(BUTTON_PIN_6, GPIO.IN)
 
 
 
-im = PIL.Image.open('images/uw.jpg')
+im = PIL.Image.open('images/T.jpg')
 imw, imh = im.size
 im_vals = list(im.getdata())
 im_array = numpy.array(im)
@@ -120,8 +120,16 @@ BLUE_MASK = 0xFF0000
 GREEN_MASK = 0xFF00
 RED_MASK = 0XFF
 
-RED = (0, 200, 0)
+RED = (0, 255, 0)
+GREEN = (255, 0, 0)
+BLUE = (0, 0, 255)
 pixels.fill(RED)
+pixels.show()
+time.sleep(1)
+pixels.fill(GREEN)
+pixels.show()
+time.sleep(1)
+pixels.fill(BLUE)
 pixels.show()
 time.sleep(1)
 
@@ -420,38 +428,31 @@ def setBrightness(num):
 def buttonHandler(channel):
     print("button handler")
     print(channel)
-    setColorMode("RAINBOW")
-    GPIO.output(LED_PIN_RED1,GPIO.HIGH)
-    GPIO.output(LED_PIN_RED2,GPIO.LOW)
+    if ( channel == BUTTON_PIN_1):
+        setColorMode("RAINBOW")
+        GPIO.output(LED_PIN_RED1,GPIO.HIGH)
+        GPIO.output(LED_PIN_RED2,GPIO.LOW)
+    elif ( channel == BUTTON_PIN_2):
+        setColorMode("LOGO")
+        GPIO.output(LED_PIN_RED2,GPIO.HIGH)
+        GPIO.output(LED_PIN_RED1,GPIO.LOW)
+    elif ( channel == BUTTON_PIN_3):
+        setAnimMode("PERLIN")
+        GPIO.output(LED_PIN_BLUE,GPIO.HIGH)
+    elif ( channel == BUTTON_PIN_4):
+        setAnimMode("RIPPLE")
+        GPIO.output(LED_PIN_GREEN,GPIO.HIGH)
 
-# when a falling edge is detected on port 17, regardless of whatever
-# else is happening in the program, the function my_callback will be run
+
 GPIO.add_event_detect(BUTTON_PIN_1, GPIO.FALLING, callback=buttonHandler, bouncetime=300)
+
 
 while True:
     # if GPIO.input(BUTTON_PIN_1) == True:
     #     print("Button 1")
-        
 
-    if GPIO.input(BUTTON_PIN_2) == True:
-        print("Button 2")
-        setColorMode("LOGO")
-        GPIO.output(LED_PIN_RED2,GPIO.HIGH)
-        GPIO.output(LED_PIN_RED1,GPIO.LOW)
 
-    if GPIO.input(BUTTON_PIN_3) == True:
-        print("Button 3")
-        setAnimMode("PERLIN")
-        GPIO.output(LED_PIN_BLUE,GPIO.HIGH)
-    else :
-        GPIO.output(LED_PIN_BLUE,GPIO.LOW)
-
-    if GPIO.input(BUTTON_PIN_4) == True:
-        print("Button 4")
-        setAnimMode("RIPPLE")
-        GPIO.output(LED_PIN_GREEN,GPIO.HIGH)
-    else :
-        GPIO.output(LED_PIN_GREEN,GPIO.LOW)
+    
 
     if GPIO.input(BUTTON_PIN_5) == True:
         print("Button 5")
