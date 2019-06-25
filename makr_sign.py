@@ -50,7 +50,7 @@ GPIO.setup(BUTTON_PIN_6, GPIO.IN)
 
 
 
-im = PIL.Image.open('images/T.jpg')
+im = PIL.Image.open('/home/pi/Desktop/makr_sign/images/T.jpg')
 imw, imh = im.size
 im_vals = list(im.getdata())
 im_array = numpy.array(im)
