@@ -120,8 +120,8 @@ BLUE_MASK = 0xFF0000
 GREEN_MASK = 0xFF00
 RED_MASK = 0XFF
 
-RED = (0, 255, 0)
-GREEN = (255, 0, 0)
+RED = (255, 0, 0)
+GREEN = (0, 255, 0)
 BLUE = (0, 0, 255)
 pixels.fill(RED)
 pixels.show()
