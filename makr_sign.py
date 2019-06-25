@@ -445,6 +445,9 @@ def buttonHandler(channel):
 
 
 GPIO.add_event_detect(BUTTON_PIN_1, GPIO.FALLING, callback=buttonHandler, bouncetime=300)
+GPIO.add_event_detect(BUTTON_PIN_2, GPIO.FALLING, callback=buttonHandler, bouncetime=300)
+GPIO.add_event_detect(BUTTON_PIN_3, GPIO.FALLING, callback=buttonHandler, bouncetime=300)
+GPIO.add_event_detect(BUTTON_PIN_4, GPIO.FALLING, callback=buttonHandler, bouncetime=300)
 
 
 while True:
@@ -452,7 +455,7 @@ while True:
     #     print("Button 1")
 
 
-    
+
 
     if GPIO.input(BUTTON_PIN_5) == True:
         print("Button 5")
